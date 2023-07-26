@@ -1,7 +1,25 @@
 const router = require('express').Router();
 const { Category, Product } = require('../../models');
 
-// The `/api/categories` endpoint
+// routes/api/category-routes.js
+const router = require('express').Router();
+const { Category, Product } = require('../../models');
+
+router.get('/', async (req, res) => {
+  try {
+    const categories = await Category.findAll({
+      include: [Product],
+    });
+    res.json(categories);
+  } catch (err) {
+    res.status(500).json({ error: 'Server Error' });
+  }
+});
+
+
+
+module.exports = router;
+
 
 router.get('/', (req, res) => {
   // find all categories
